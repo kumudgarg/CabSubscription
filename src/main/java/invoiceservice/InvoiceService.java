@@ -46,7 +46,11 @@ public class InvoiceService {
         rideRepository.addRides(userId, rides);
     }
 
-    public InvoiceSummary getInvoiceSummary(String userId) {
-        return this.calculateFare(rideRepository.getRides(userId));
+    public InvoiceSummary getInvoiceSummary(String userId) throws RideRepositoryException {
+        try {
+            return this.calculateFare(rideRepository.getRides(userId));
+        } catch (RideRepositoryException e) {
+            throw new RideRepositoryException(e.getMessage(), RideRepositoryException.ExceptionType.NULL_VALUE);
+        }
     }
 }

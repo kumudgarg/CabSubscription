@@ -1,7 +1,4 @@
-import invoiceservice.CabSubscriptions;
-import invoiceservice.InvoiceService;
-import invoiceservice.InvoiceSummary;
-import invoiceservice.Ride;
+import invoiceservice.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -38,15 +35,20 @@ public class InvoiceServiceTest {
 
     @Test
     public void givenUserIdAndRides_ShouldReturnInvoiceSummary() {
-        InvoiceService invoiceService = new InvoiceService(CabSubscriptions.NORMAL);
-        String userId = "a@b.com";
-        Ride[] rides = {new Ride(2.0, 5),
-                new Ride(0.1, 1)
-        };
-        invoiceService.addRide(userId, rides);
-        InvoiceSummary summary = invoiceService.getInvoiceSummary(userId);
-        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2.0, 30);
-        Assert.assertEquals(expectedInvoiceSummary, summary);
+        try {
+            InvoiceService invoiceService = new InvoiceService(CabSubscriptions.NORMAL);
+            String userId = "a@b.com";
+            Ride[] rides = {new Ride(2.0, 5),
+                    new Ride(0.1, 1)
+            };
+            invoiceService.addRide(userId, rides);
+            InvoiceSummary summary = invoiceService.getInvoiceSummary(userId);
+            InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2.0, 30);
+            Assert.assertEquals(expectedInvoiceSummary, summary);
+        } catch (RideRepositoryException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Test
@@ -80,15 +82,20 @@ public class InvoiceServiceTest {
 
     @Test
     public void givenUserIdAndRidesForPremiumSubscription_ShouldReturnInvoiceSummary() {
-        InvoiceService invoiceService = new InvoiceService(CabSubscriptions.PREMIUM);
-        String userId = "a@b.com";
-        Ride[] rides = {new Ride(2.0, 5),
-                new Ride(0.1, 1)
-        };
-        invoiceService.addRide(userId, rides);
-        InvoiceSummary summary = invoiceService.getInvoiceSummary(userId);
-        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2.0, 60);
-        Assert.assertEquals(expectedInvoiceSummary, summary);
+        try {
+            InvoiceService invoiceService = new InvoiceService(CabSubscriptions.PREMIUM);
+            String userId = "a@b.com";
+            Ride[] rides = {new Ride(2.0, 5),
+                    new Ride(0.1, 1)
+            };
+            invoiceService.addRide(userId, rides);
+            InvoiceSummary summary = null;
+            summary = invoiceService.getInvoiceSummary(userId);
+            InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2.0, 60);
+            Assert.assertEquals(expectedInvoiceSummary, summary);
+        } catch (RideRepositoryException e) {
+            e.printStackTrace();
+        }
     }
-    
+
 }

@@ -13,7 +13,10 @@ public class RideRepository {
         this.userRides.put(userId, new ArrayList<>(Arrays.asList(rides)));
     }
 
-    public Ride[] getRides(String userId) {
-        return this.userRides.get(userId).toArray(new Ride[0]);
+    public Ride[] getRides(String userId) throws RideRepositoryException {
+        if (userId != "")
+            return this.userRides.get(userId).toArray(new Ride[0]);
+        else
+            throw new RideRepositoryException("Null value passed", RideRepositoryException.ExceptionType.NULL_VALUE);
     }
 }
