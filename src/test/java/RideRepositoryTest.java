@@ -22,7 +22,7 @@ public class RideRepositoryTest {
     }
 
     @Test
-    public void givenDistanceAndTime_ShouldReturnTotalFare() {
+    public void givenDistanceAndTime_WithNullUserId_ShouldReturnCustomExceptionType() {
         try {
             RideRepository rideRepository = new RideRepository();
             String userId = "";
@@ -37,4 +37,18 @@ public class RideRepositoryTest {
         }
     }
 
+    @Test
+    public void givenDistanceAndTime_WithEmptyRide_ShouldReturnCustomExceptionType() {
+        try {
+            RideRepository rideRepository = new RideRepository();
+            String userId = "";
+            Ride[] rides = {
+            };
+            rideRepository.addRides(userId, rides);
+            Ride[] summary = new Ride[0];
+            summary = rideRepository.getRides(userId);
+        } catch (RideRepositoryException e) {
+            Assert.assertEquals(RideRepositoryException.ExceptionType.NO_RIDE_FOUND, e.type);
+        }
+    }
 }

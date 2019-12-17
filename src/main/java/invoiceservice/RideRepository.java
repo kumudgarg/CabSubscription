@@ -9,8 +9,10 @@ public class RideRepository {
         this.userRides = new HashMap<>();
     }
 
-    public void addRides(String userId, Ride[] rides) {
-        this.userRides.put(userId, new ArrayList<>(Arrays.asList(rides)));
+    public void addRides(String userId, Ride[] rides) throws RideRepositoryException {
+        if(rides != null)
+            this.userRides.put(userId, new ArrayList<>(Arrays.asList(rides)));
+        throw new RideRepositoryException("Rides are Empty", RideRepositoryException.ExceptionType.NO_RIDE_FOUND);
     }
 
     public Ride[] getRides(String userId) throws RideRepositoryException {

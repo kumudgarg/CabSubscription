@@ -7,7 +7,7 @@ public class RideRepositoryException extends Exception {
     }
 
     public enum ExceptionType {
-        NULL_VALUE
+        NULL_VALUE, NO_RIDE_FOUND
     }
 
     public ExceptionType type;
