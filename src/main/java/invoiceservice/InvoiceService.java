@@ -18,17 +18,9 @@ public class InvoiceService {
     }
 
     public double calculateFare(double distance, int time) {
-        if (CabSubscriptions.NORMAL.equals(this.cabSubscriptions)) {
-            Double totalFare = distance * MINIMUM_COST_PER_KILOMETER_NORAMAL + time * COST_PER_TIME_FOR_NORMAL;
-            return Math.max(totalFare,MINIMUM_FARE_NORMAL);
-
-        }
-        if (CabSubscriptions.PREMIUM.equals(this.cabSubscriptions)) {
-            Double totalFare = distance * MINIMUM_COST_PER_KILOMETER_PREMIUM + time * COST_PER_TIME_FOR_PREMIUM;
-            return Math.max(totalFare,MINIMUM_FARE_PREMIUM);
-        }
-        return 0.0;
+        return cabSubscriptions.calculateFare(distance,time);
     }
+
 
     public InvoiceSummary calculateFare(Ride[] rides) {
         double totalFare = 0.0;
@@ -46,7 +38,7 @@ public class InvoiceService {
         try {
             return this.calculateFare(rideRepository.getRides(userId));
         } catch (RideRepositoryException e) {
-            throw new RideRepositoryException(e.getMessage(), RideRepositoryException.ExceptionType.NULL_VALUE);
+            throw new RideRepositoryException("null user id found", RideRepositoryException.ExceptionType.NULL_VALUE);
         }
     }
 }

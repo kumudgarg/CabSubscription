@@ -89,12 +89,22 @@ public class InvoiceServiceTest {
                     new Ride(0.1, 1)
             };
             invoiceService.addRide(userId, rides);
-            InvoiceSummary summary = null;
-            summary = invoiceService.getInvoiceSummary(userId);
+            InvoiceSummary summary = invoiceService.getInvoiceSummary(userId);
             InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2.0, 60);
             Assert.assertEquals(expectedInvoiceSummary, summary);
         } catch (RideRepositoryException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenNullUserId_ShouldReturnEqualCustomException() {
+       try {
+        InvoiceService invoiceService = new InvoiceService(CabSubscriptions.NORMAL);
+        String userId = "";
+        InvoiceSummary invoiceSummary = invoiceService.getInvoiceSummary(userId);
+        } catch (RideRepositoryException e) {
+           Assert.assertEquals(RideRepositoryException.ExceptionType.NULL_VALUE, e.type);
         }
     }
 

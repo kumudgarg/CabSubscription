@@ -9,9 +9,9 @@ public class RideRepository {
         this.userRides = new HashMap<>();
     }
 
-    public void addRides(String userId, Ride[] rides) throws RideRepositoryException {
-        if(rides != null)
-            this.userRides.put(userId, new ArrayList<>(Arrays.asList(rides)));
+    public ArrayList<Ride> addRides(String userId, Ride[] rides) throws RideRepositoryException {
+        if (rides != null && userId != "")
+            return this.userRides.put(userId, new ArrayList<>(Arrays.asList(rides)));
         throw new RideRepositoryException("Rides are Empty", RideRepositoryException.ExceptionType.NO_RIDE_FOUND);
     }
 
@@ -19,6 +19,6 @@ public class RideRepository {
         if (userId != "")
             return this.userRides.get(userId).toArray(new Ride[0]);
         else
-            throw new RideRepositoryException("Null value passed", RideRepositoryException.ExceptionType.NULL_VALUE);
+            throw new RideRepositoryException("Null value passed", RideRepositoryException.ExceptionType.NO_RIDE_FOUND);
     }
 }
